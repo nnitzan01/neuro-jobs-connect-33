@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Header } from "@/components/home/Header";
 import { SearchBar } from "@/components/home/SearchBar";
-import JobList from "@/components/JobList";
+import JobList, { REGULAR_JOBS } from "@/components/JobList";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,10 +18,11 @@ const Index = () => {
         <Header />
         
         <div id="featured-jobs" className="mb-8 scroll-mt-20">
-          <JobList />
+          <h2 className="text-2xl font-bold mb-4">Featured Jobs</h2>
+          <JobList featured={true} />
         </div>
         
-        <div id="search-jobs" className="scroll-mt-20">
+        <div id="search-jobs" className="scroll-mt-20 mb-8">
           <SearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -36,6 +37,11 @@ const Index = () => {
             setting={setting}
             setSetting={setSetting}
           />
+        </div>
+
+        <div id="all-jobs" className="mb-8 scroll-mt-20">
+          <h2 className="text-2xl font-bold mb-4">All Jobs</h2>
+          <JobList featured={false} jobsToShow={REGULAR_JOBS} />
         </div>
       </main>
     </div>
