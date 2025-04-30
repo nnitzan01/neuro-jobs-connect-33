@@ -45,7 +45,7 @@ const Index = () => {
         </div>
         
         <div id="our-mission" className="mb-8 mt-16 pt-4 scroll-mt-20 border-t border-gray-200">
-          <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
+          <h2 className="text-2xl font-bold mb-4 text-center">Our Mission</h2>
           <div className="bg-white p-6 rounded-lg shadow-md animate-fade-in">
             <p className="text-gray-700 mb-4">
               At NeuroTech Job Board, we're dedicated to connecting talented individuals with cutting-edge opportunities in the rapidly expanding field of neurotechnology.
