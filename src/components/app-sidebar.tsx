@@ -15,7 +15,7 @@ const items = [
   { title: "Home", url: "/", icon: Briefcase },
   { title: "Jobs", url: "/", icon: FileText },
   { title: "Startups", url: "#", icon: Building },
-  { title: "Post Job", url: "#", icon: Users },
+  { title: "Post Job", url: "/post-job", icon: Users },
 ];
 
 export function AppSidebar() {
