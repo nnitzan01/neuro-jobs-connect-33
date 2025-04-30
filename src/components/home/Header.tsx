@@ -13,7 +13,7 @@ export const Header = () => {
       <img 
         src="/lovable-uploads/bc421971-bd95-44dc-9ecb-13f305b459f3.png" 
         alt="Glowing blue brain connected to circuit" 
-        className="rounded-lg shadow-lg mt-4 w-full max-w-xl h-60 object-cover animate-fade-in" 
+        className="rounded-lg shadow-lg mt-4 w-full max-w-xl h-65 object-cover animate-fade-in" 
       />
     </header>
   );
