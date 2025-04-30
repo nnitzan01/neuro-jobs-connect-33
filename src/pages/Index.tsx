@@ -17,6 +17,10 @@ const Index = () => {
       <main className="flex-1 px-6 py-10 max-w-6xl mx-auto">
         <Header />
         
+        <div className="mb-8">
+          <JobList />
+        </div>
+        
         <SearchBar
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
@@ -31,10 +35,6 @@ const Index = () => {
           setting={setting}
           setSetting={setSetting}
         />
-        
-        <div>
-          <JobList />
-        </div>
       </main>
     </div>
   );
