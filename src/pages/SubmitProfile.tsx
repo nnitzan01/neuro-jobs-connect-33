@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -9,7 +8,7 @@ import {
   Briefcase, 
   MapPin, 
   Settings, 
-  Category, 
+  Chip,  // Replacing Category with Chip
   DollarSign, 
   FileText, 
   Link, 
@@ -234,7 +233,7 @@ export default function SubmitProfile() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="flex items-center gap-2">
-                        <Category className="h-4 w-4" /> Sector
+                        <Chip className="h-4 w-4" /> Sector
                       </FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
@@ -368,7 +367,7 @@ export default function SubmitProfile() {
                 disabled={isSubmitting}
               >
                 <Send className="mr-2 h-4 w-4" /> 
-                {isSubmitting ? "Submitting..." : "Submit Profile"}
+                {isSubmitting ? "Submit Profile"}
               </Button>
             </form>
           </Form>
