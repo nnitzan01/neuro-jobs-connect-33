@@ -1,5 +1,5 @@
 
-import { briefcase, mapPin, building, clock } from "lucide-react";
+import { Briefcase, MapPin, Building, Clock } from "lucide-react";
 
 type Job = {
   title: string;
@@ -18,7 +18,7 @@ export default function JobCard({ job }: { job: Job }) {
           {job.logo ? (
             <img src={job.logo} alt={job.company} className="h-10 w-10 object-cover rounded-full" />
           ) : (
-            <building size={28} />
+            <Building size={28} />
           )}
         </div>
         <div>
@@ -27,8 +27,8 @@ export default function JobCard({ job }: { job: Job }) {
         </div>
       </div>
       <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
-        <span className="flex items-center gap-1"><mapPin size={15} /> {job.location}</span>
-        <span className="flex items-center gap-1"><clock size={15} /> {job.type}</span>
+        <span className="flex items-center gap-1"><MapPin size={15} /> {job.location}</span>
+        <span className="flex items-center gap-1"><Clock size={15} /> {job.type}</span>
       </div>
       <a
         href={job.applyUrl}

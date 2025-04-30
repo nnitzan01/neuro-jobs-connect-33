@@ -9,13 +9,13 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { briefcase, building, users, file-text, search } from "lucide-react";
+import { Briefcase, Building, Users, FileText, Search } from "lucide-react";
 
 const items = [
-  { title: "Home", url: "/", icon: briefcase },
-  { title: "Jobs", url: "/", icon: file-text },
-  { title: "Startups", url: "#", icon: building },
-  { title: "Post Job", url: "#", icon: users },
+  { title: "Home", url: "/", icon: Briefcase },
+  { title: "Jobs", url: "/", icon: FileText },
+  { title: "Startups", url: "#", icon: Building },
+  { title: "Post Job", url: "#", icon: Users },
 ];
 
 export function AppSidebar() {
