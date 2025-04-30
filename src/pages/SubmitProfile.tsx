@@ -367,7 +367,7 @@ export default function SubmitProfile() {
                 disabled={isSubmitting}
               >
                 <Send className="mr-2 h-4 w-4" /> 
-                {isSubmitting ? "Submit Profile"}
+                {isSubmitting ? "Submitting..." : "Submit Profile"}
               </Button>
             </form>
           </Form>
