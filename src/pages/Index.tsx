@@ -21,20 +21,22 @@ const Index = () => {
           <JobList />
         </div>
         
-        <SearchBar
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          jobFunction={jobFunction}
-          setJobFunction={setJobFunction}
-          sector={sector}
-          setSector={setSector}
-          location={location}
-          setLocation={setLocation}
-          jobType={jobType}
-          setJobType={setJobType}
-          setting={setting}
-          setSetting={setSetting}
-        />
+        <div id="search-jobs" className="scroll-mt-20">
+          <SearchBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            jobFunction={jobFunction}
+            setJobFunction={setJobFunction}
+            sector={sector}
+            setSector={setSector}
+            location={location}
+            setLocation={setLocation}
+            jobType={jobType}
+            setJobType={setJobType}
+            setting={setting}
+            setSetting={setSetting}
+          />
+        </div>
       </main>
     </div>
   );

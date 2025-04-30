@@ -13,7 +13,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 const items = [
-  { title: "All Jobs", url: "/", icon: List },
+  { title: "All Jobs", url: "/#search-jobs", icon: List },
   { title: "Featured Jobs", url: "/#featured-jobs", icon: Star },
   { title: "Post Job", url: "/post-job", icon: Plus },
   { title: "Submit Profile", url: "/submit-profile", icon: User },
