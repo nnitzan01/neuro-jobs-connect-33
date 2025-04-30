@@ -18,7 +18,7 @@ interface JobCardProps {
 
 export default function JobCard({ job, featured = false }: JobCardProps) {
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-200 animate-fade-in hover:scale-105 hover:border-primary/40 cursor-pointer flex flex-col h-[250px] justify-between relative">
+    <div className="p-6 bg-white rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-200 animate-fade-in hover:scale-105 hover:border-primary/40 cursor-pointer flex flex-col h-[300px] justify-between relative">
       {featured && (
         <Badge className="absolute top-2 right-2 bg-primary text-white px-3 py-1">Featured</Badge>
       )}
