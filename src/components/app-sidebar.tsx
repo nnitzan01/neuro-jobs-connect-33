@@ -1,44 +1,42 @@
 
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { Briefcase, Building, Users, FileText, Search } from "lucide-react";
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle
+} from "@/components/ui/navigation-menu";
+import { List, Star, Plus, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const items = [
-  { title: "Home", url: "/", icon: Briefcase },
-  { title: "Jobs", url: "/", icon: FileText },
-  { title: "Startups", url: "#", icon: Building },
-  { title: "Post Job", url: "/post-job", icon: Users },
+  { title: "All Jobs", url: "/", icon: List },
+  { title: "Featured Jobs", url: "/featured", icon: Star },
+  { title: "Post Job", url: "/post-job", icon: Plus },
+  { title: "Submit Profile", url: "/submit-profile", icon: User },
 ];
 
 export function AppSidebar() {
   return (
-    <Sidebar>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Menu</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url} className="flex items-center gap-3 font-semibold text-gray-800 hover:text-primary transition-colors duration-200">
-                      <item.icon size={20} /> <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
+    <div className="w-full bg-white shadow-sm py-3 px-6 fixed top-0 z-50">
+      <NavigationMenu className="max-w-4xl mx-auto">
+        <NavigationMenuList>
+          {items.map((item) => (
+            <NavigationMenuItem key={item.title}>
+              <Link to={item.url}>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <div className="flex items-center gap-2">
+                    <item.icon size={18} />
+                    <span>{item.title}</span>
+                  </div>
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+          ))}
+        </NavigationMenuList>
+      </NavigationMenu>
+    </div>
   );
 }

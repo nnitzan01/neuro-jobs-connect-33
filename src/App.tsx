@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import PostJob from "./pages/PostJob";
 import NotFound from "./pages/NotFound";
+import { AppSidebar } from "./components/app-sidebar";
 
 const queryClient = new QueryClient();
 
@@ -16,12 +17,17 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/post-job" element={<PostJob />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AppSidebar />
+        <div className="pt-16"> {/* Add padding to push content down */}
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/post-job" element={<PostJob />} />
+            <Route path="/featured" element={<Index />} /> {/* We'll reuse Index for now */}
+            <Route path="/submit-profile" element={<PostJob />} /> {/* We'll reuse PostJob for now */}
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
