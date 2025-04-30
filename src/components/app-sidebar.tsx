@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 const items = [
   { title: "All Jobs", url: "/", icon: List },
-  { title: "Featured Jobs", url: "/featured", icon: Star },
+  { title: "Featured Jobs", url: "/#featured-jobs", icon: Star },
   { title: "Post Job", url: "/post-job", icon: Plus },
   { title: "Submit Profile", url: "/submit-profile", icon: User },
 ];

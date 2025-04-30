@@ -17,7 +17,7 @@ const Index = () => {
       <main className="flex-1 px-6 py-10 max-w-6xl mx-auto">
         <Header />
         
-        <div className="mb-8">
+        <div id="featured-jobs" className="mb-8 scroll-mt-20">
           <JobList />
         </div>
         
