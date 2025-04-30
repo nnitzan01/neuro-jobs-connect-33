@@ -23,7 +23,7 @@ export default function JobCard({ job, featured = false }: JobCardProps) {
         <Badge className="absolute top-2 right-2 bg-primary text-white px-3 py-1">Featured</Badge>
       )}
       
-      <div className="flex items-center gap-3">
+      <div className={`flex items-center gap-3 ${featured ? 'mt-4' : ''}`}>
         <div className="h-12 w-12 bg-accent rounded-full flex items-center justify-center text-primary font-bold text-xl">
           {job.logo ? (
             <img src={job.logo} alt={job.company} className="h-10 w-10 object-cover rounded-full" />
