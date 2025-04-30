@@ -8,7 +8,7 @@ export const Header = () => {
         NeuroTech Job Board
       </h1>
       <p className="text-gray-600 text-lg md:text-xl text-center max-w-2xl animate-fade-in">
-        Discover open positions at the world's most innovative neurotechnology startups — from BCI development to machine learning and neuroscience.
+        Discover open positions at the world's most innovative neurotechnology companies — from BCI development to machine learning and neuroscience.
       </p>
       <img 
         src="/lovable-uploads/bc421971-bd95-44dc-9ecb-13f305b459f3.png" 
