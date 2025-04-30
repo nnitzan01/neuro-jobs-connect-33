@@ -8,7 +8,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu";
-import { List, Star, Plus, User } from "lucide-react";
+import { List, Star, Plus, User, Info } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -17,6 +17,7 @@ const items = [
   { title: "Featured Jobs", url: "/#featured-jobs", icon: Star },
   { title: "Post Job", url: "/post-job", icon: Plus },
   { title: "Submit Profile", url: "/submit-profile", icon: User },
+  { title: "Our Mission", url: "/#our-mission", icon: Info },
 ];
 
 export function AppSidebar() {
