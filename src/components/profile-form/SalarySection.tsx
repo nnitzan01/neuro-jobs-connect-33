@@ -38,7 +38,9 @@ export function SalarySection({ form }: SalarySectionProps) {
         name="salaryMax"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Maximum Salary</FormLabel>
+            <FormLabel className="flex items-center gap-2">
+              <DollarSign className="h-4 w-4" /> Maximum Salary
+            </FormLabel>
             <FormControl>
               <Input type="number" placeholder="e.g., 80000" {...field} />
             </FormControl>
