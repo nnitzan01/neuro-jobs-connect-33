@@ -13,7 +13,7 @@ export const Header = () => {
       <img 
         src="/lovable-uploads/9e0caaad-f9fa-40d7-ac07-80c5a54e4b3d.png" 
         alt="Glowing blue brain on computer chip" 
-        className="rounded-lg shadow-lg mt-4 w-full max-w-xl h-80 object-cover animate-fade-in" 
+        className="rounded-lg shadow-lg mt-4 w-full max-w-xl h-100 object-cover animate-fade-in" 
       />
     </header>
   );
