@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import PostJob from "./pages/PostJob";
 import NotFound from "./pages/NotFound";
+import SubmitProfile from "./pages/SubmitProfile";
 import { AppSidebar } from "./components/app-sidebar";
 
 const queryClient = new QueryClient();
@@ -23,7 +24,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/post-job" element={<PostJob />} />
             <Route path="/featured" element={<Index />} /> {/* We'll reuse Index for now */}
-            <Route path="/submit-profile" element={<PostJob />} /> {/* We'll reuse PostJob for now */}
+            <Route path="/submit-profile" element={<SubmitProfile />} /> {/* Updated to use our new component */}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
