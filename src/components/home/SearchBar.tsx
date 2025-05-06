@@ -70,6 +70,7 @@ export const SearchBar = ({
                 <SelectItem value="hardware-engineer">Hardware Engineer</SelectItem>
                 <SelectItem value="product-manager">Product Manager</SelectItem>
                 <SelectItem value="ux-researcher">UX Researcher</SelectItem>
+                <SelectItem value="others">Others</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -91,6 +92,7 @@ export const SearchBar = ({
                 <SelectItem value="neurorehabilitation">Neurorehabilitation</SelectItem>
                 <SelectItem value="cognitive-enhancement">Cognitive Enhancement & Consumer Neurotech</SelectItem>
                 <SelectItem value="ai-neuroinformatics">AI & Neuroinformatics</SelectItem>
+                <SelectItem value="others">Others</SelectItem>
               </SelectContent>
             </Select>
           </div>
