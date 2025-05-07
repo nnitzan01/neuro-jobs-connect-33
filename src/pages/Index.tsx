@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Header } from "@/components/home/Header";
 import { SearchBar } from "@/components/home/SearchBar";
@@ -5,11 +6,11 @@ import JobList from "@/components/JobList";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [jobFunction, setJobFunction] = useState("");
-  const [sector, setSector] = useState("");
-  const [location, setLocation] = useState("");
-  const [jobType, setJobType] = useState("");
-  const [setting, setSetting] = useState("");
+  const [jobFunction, setJobFunction] = useState("all");
+  const [sector, setSector] = useState("all");
+  const [location, setLocation] = useState("all");
+  const [jobType, setJobType] = useState("all");
+  const [setting, setSetting] = useState("all");
 
   return (
     <div className="min-h-screen flex font-sans w-full bg-gradient-to-br from-[#f8fbff] via-[#e5deff] to-[#f2fce2]">

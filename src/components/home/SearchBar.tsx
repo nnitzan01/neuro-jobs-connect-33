@@ -1,9 +1,9 @@
-
 import React from "react";
 import { Search, Briefcase, Building, MapPin, Clock, Settings } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 interface SearchBarProps {
   searchQuery: string;
@@ -18,6 +18,7 @@ interface SearchBarProps {
   setJobType: (value: string) => void;
   setting: string;
   setSetting: (value: string) => void;
+  onSearch?: () => void;
 }
 
 export const SearchBar = ({
@@ -33,7 +34,30 @@ export const SearchBar = ({
   setJobType,
   setting,
   setSetting,
+  onSearch,
 }: SearchBarProps) => {
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    // If a custom search handler was provided, use it
+    if (onSearch) {
+      onSearch();
+      return;
+    }
+
+    // Otherwise, build the query string and navigate
+    const queryParams = new URLSearchParams();
+    
+    if (searchQuery) queryParams.append("query", searchQuery);
+    if (jobFunction !== "all" && jobFunction) queryParams.append("jobFunction", jobFunction);
+    if (sector !== "all" && sector) queryParams.append("sector", sector);
+    if (location !== "all" && location) queryParams.append("location", location);
+    if (jobType !== "all" && jobType) queryParams.append("jobType", jobType);
+    if (setting !== "all" && setting) queryParams.append("setting", setting);
+    
+    navigate(`/search?${queryParams.toString()}`);
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md p-5 mb-8 animate-fade-in">
       <h2 className="text-lg font-bold mb-4">Find Your Perfect Neurotech Position</h2>
@@ -203,7 +227,7 @@ export const SearchBar = ({
           
           {/* Search Button */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Button className="w-full">
+            <Button className="w-full" onClick={handleSearch}>
               <Search size={18} className="mr-2" />
               Search Jobs
             </Button>

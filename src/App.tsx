@@ -8,9 +8,17 @@ import Index from "./pages/Index";
 import PostJob from "./pages/PostJob";
 import NotFound from "./pages/NotFound";
 import SubmitProfile from "./pages/SubmitProfile";
+import SearchResults from "./pages/SearchResults";
 import { AppSidebar } from "./components/app-sidebar";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -23,8 +31,9 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/post-job" element={<PostJob />} />
-            <Route path="/featured" element={<Index />} /> {/* We'll reuse Index for now */}
-            <Route path="/submit-profile" element={<SubmitProfile />} /> {/* Updated to use our new component */}
+            <Route path="/search" element={<SearchResults />} />
+            <Route path="/featured" element={<Index />} />
+            <Route path="/submit-profile" element={<SubmitProfile />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

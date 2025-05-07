@@ -1,15 +1,7 @@
 
 import { Briefcase, MapPin, Building, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-
-type Job = {
-  title: string;
-  company: string;
-  location: string;
-  type: string;
-  logo?: string;
-  applyUrl: string;
-};
+import { type Job } from "./JobList";
 
 interface JobCardProps {
   job: Job;

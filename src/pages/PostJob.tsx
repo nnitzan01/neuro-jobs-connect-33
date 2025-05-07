@@ -25,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useMutation } from "@tanstack/react-query";
 
 // Define the form schema with Zod
 const formSchema = z.object({
@@ -48,6 +49,9 @@ const formSchema = z.object({
   applicationUrl: z.string().url({
     message: "Please enter a valid URL for applications.",
   }),
+  featured: z.boolean().default(false),
+  sector: z.string().optional(),
+  setting: z.enum(["On-site", "Remote", "Hybrid"]).optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -67,25 +71,47 @@ const PostJob = () => {
       requirements: "",
       salary: "",
       applicationUrl: "",
+      featured: false,
+      sector: "",
+      setting: "On-site",
+    },
+  });
+
+  // Post job mutation
+  const postJobMutation = useMutation({
+    mutationFn: async (jobData: FormValues) => {
+      const response = await fetch("http://localhost:8000/api/jobs/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...jobData,
+          applyUrl: jobData.applicationUrl, // Map to match backend field name
+        }),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || "Failed to post job");
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      toast.success("Job posted successfully!");
+      form.reset();
+    },
+    onError: (error) => {
+      toast.error(`Failed to post job: ${error.message}`);
     },
   });
 
   // Form submission handler
   const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
-    
     try {
-      // In a real app, you would send this data to your backend
-      console.log("Form submitted:", values);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast.success("Job posted successfully!");
-      form.reset();
-    } catch (error) {
-      toast.error("Failed to post job. Please try again.");
-      console.error("Error submitting form:", error);
+      await postJobMutation.mutateAsync(values);
     } finally {
       setIsSubmitting(false);
     }
@@ -179,6 +205,58 @@ const PostJob = () => {
                   />
                 </div>
 
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="sector"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Sector</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select sector" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Implantable Devices">Implantable Devices</SelectItem>
+                            <SelectItem value="Pharmaceuticals & Neuromodulation">Pharmaceuticals & Neuromodulation</SelectItem>
+                            <SelectItem value="Neurosensing & Diagnostics">Neurosensing & Diagnostics</SelectItem>
+                            <SelectItem value="Neurorehabilitation">Neurorehabilitation</SelectItem>
+                            <SelectItem value="Cognitive Enhancement & Consumer Neurotech">Cognitive Enhancement & Consumer Neurotech</SelectItem>
+                            <SelectItem value="AI & Neuroinformatics">AI & Neuroinformatics</SelectItem>
+                            <SelectItem value="Other">Other</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="setting"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Work Setting</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value || "On-site"}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select work setting" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="On-site">On-site</SelectItem>
+                            <SelectItem value="Remote">Remote</SelectItem>
+                            <SelectItem value="Hybrid">Hybrid</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
                 <FormField
                   control={form.control}
                   name="salary"
@@ -245,6 +323,29 @@ const PostJob = () => {
                         Direct link where candidates can apply for this position
                       </FormDescription>
                       <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="featured"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <input
+                          type="checkbox"
+                          checked={field.value}
+                          onChange={(e) => field.onChange(e.target.checked)}
+                          className="h-5 w-5 rounded border-gray-300 text-primary"
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Featured Job</FormLabel>
+                        <FormDescription>
+                          Featured jobs appear at the top of the job board and receive more visibility
+                        </FormDescription>
+                      </div>
                     </FormItem>
                   )}
                 />
