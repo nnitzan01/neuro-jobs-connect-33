@@ -11,8 +11,8 @@ export const Header = () => {
         Discover open positions at the world's most innovative neurotechnology companies — from BCI development to machine learning and neuroscience.
       </p>
       <img 
-        src="/lovable-uploads/bc421971-bd95-44dc-9ecb-13f305b459f3.png" 
-        alt="Glowing blue brain connected to circuit" 
+        src="/lovable-uploads/a01e9ae8-420e-4ee8-bb72-f68d7784f9f1.png" 
+        alt="Digital brain connected to computer chip" 
         className="rounded-lg shadow-lg mt-4 w-full max-w-xl h-65 object-cover animate-fade-in" 
       />
     </header>
