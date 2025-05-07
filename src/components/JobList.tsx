@@ -29,7 +29,23 @@ const fetchJobs = async (featured?: boolean): Promise<Job[]> => {
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
-  return response.json();
+  
+  // Get the response data
+  const data = await response.json();
+  
+  // Check if the response is paginated (Django REST Framework format)
+  if (data.results && Array.isArray(data.results)) {
+    return data.results;
+  }
+  
+  // If not paginated, return the data directly if it's an array
+  if (Array.isArray(data)) {
+    return data;
+  }
+  
+  // If we can't determine the structure, return an empty array
+  console.error("Unexpected API response format:", data);
+  return [];
 };
 
 interface JobListProps {
