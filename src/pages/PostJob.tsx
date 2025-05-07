@@ -25,8 +25,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { JobService } from "@/services/api";
-import { useMutation } from "@tanstack/react-query";
 
 // Define the form schema with Zod
 const formSchema = z.object({
@@ -55,6 +53,8 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const PostJob = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   // Initialize form
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -70,32 +70,25 @@ const PostJob = () => {
     },
   });
 
-  // Create job mutation
-  const createJobMutation = useMutation({
-    mutationFn: (values: FormValues) => {
-      return JobService.createJob({
-        title: values.title,
-        company: values.company,
-        location: values.location,
-        type: values.type,
-        description: values.description,
-        applyUrl: values.applicationUrl,
-        featured: false // Default to non-featured
-      });
-    },
-    onSuccess: () => {
-      toast.success("Job posted successfully!");
-      form.reset();
-    },
-    onError: (error) => {
-      toast.error("Failed to post job. Please try again.");
-      console.error("Error submitting form:", error);
-    }
-  });
-
   // Form submission handler
   const onSubmit = async (values: FormValues) => {
-    createJobMutation.mutate(values);
+    setIsSubmitting(true);
+    
+    try {
+      // In a real app, you would send this data to your backend
+      console.log("Form submitted:", values);
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast.success("Job posted successfully!");
+      form.reset();
+    } catch (error) {
+      toast.error("Failed to post job. Please try again.");
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -259,9 +252,9 @@ const PostJob = () => {
                 <Button 
                   type="submit" 
                   className="w-full md:w-auto" 
-                  disabled={createJobMutation.isPending}
+                  disabled={isSubmitting}
                 >
-                  {createJobMutation.isPending ? "Posting..." : "Post Job"}
+                  {isSubmitting ? "Posting..." : "Post Job"}
                 </Button>
               </form>
             </Form>
