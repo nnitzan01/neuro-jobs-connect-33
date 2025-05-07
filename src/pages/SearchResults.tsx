@@ -1,8 +1,8 @@
-
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { SearchBar } from "@/components/home/SearchBar";
 import JobList from "@/components/JobList";
+import JobCard from "@/components/JobCard";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
