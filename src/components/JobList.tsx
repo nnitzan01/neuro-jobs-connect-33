@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import JobCard from "./JobCard";
 import { useQuery } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
 
 // Define the Job type (matching our Django model)
 export type Job = {
@@ -19,33 +20,79 @@ export type Job = {
   created_at: string;
 };
 
+// Sample fallback data when API is unavailable
+const fallbackJobs: Job[] = [
+  {
+    id: 1,
+    title: "Neural Engineer",
+    company: "BrainTech Inc.",
+    location: "San Francisco, CA",
+    type: "Full-time",
+    applyUrl: "https://example.com/apply",
+    featured: true,
+    sector: "Implantable Devices",
+    setting: "On-site",
+    created_at: "2025-05-01T12:00:00Z"
+  },
+  {
+    id: 2,
+    title: "Neuroscience Researcher",
+    company: "Neural Networks Labs",
+    location: "Boston, MA",
+    type: "Full-time",
+    applyUrl: "https://example.com/apply",
+    featured: true,
+    sector: "Neurosensing & Diagnostics",
+    setting: "Hybrid",
+    created_at: "2025-04-28T12:00:00Z"
+  },
+  {
+    id: 3,
+    title: "Data Scientist - Neural Data",
+    company: "CogniTech",
+    location: "Remote (USA)",
+    type: "Full-time",
+    applyUrl: "https://example.com/apply",
+    featured: false,
+    sector: "AI & Neuroinformatics",
+    setting: "Remote",
+    created_at: "2025-04-25T12:00:00Z"
+  }
+];
+
 // API service
 const fetchJobs = async (featured?: boolean): Promise<Job[]> => {
-  const url = featured !== undefined 
-    ? `http://localhost:8000/api/jobs/?featured=${featured}` 
-    : "http://localhost:8000/api/jobs/";
-  
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
+  try {
+    const url = featured !== undefined 
+      ? `http://localhost:8000/api/jobs/?featured=${featured}` 
+      : "http://localhost:8000/api/jobs/";
+    
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    
+    // Get the response data
+    const data = await response.json();
+    
+    // Check if the response is paginated (Django REST Framework format)
+    if (data.results && Array.isArray(data.results)) {
+      return data.results;
+    }
+    
+    // If not paginated, return the data directly if it's an array
+    if (Array.isArray(data)) {
+      return data;
+    }
+    
+    // If we can't determine the structure, return an empty array
+    console.error("Unexpected API response format:", data);
+    return [];
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    // Return fallback data when API is unavailable
+    return fallbackJobs.filter(job => featured === undefined || job.featured === featured);
   }
-  
-  // Get the response data
-  const data = await response.json();
-  
-  // Check if the response is paginated (Django REST Framework format)
-  if (data.results && Array.isArray(data.results)) {
-    return data.results;
-  }
-  
-  // If not paginated, return the data directly if it's an array
-  if (Array.isArray(data)) {
-    return data;
-  }
-  
-  // If we can't determine the structure, return an empty array
-  console.error("Unexpected API response format:", data);
-  return [];
 };
 
 interface JobListProps {
@@ -53,24 +100,25 @@ interface JobListProps {
 }
 
 export default function JobList({ featured = false }: JobListProps) {
+  const { toast } = useToast();
+  
   // Using React Query for data fetching
   const { data: jobs, isLoading, error } = useQuery({
     queryKey: ["jobs", featured],
     queryFn: () => fetchJobs(featured),
+    onError: (error) => {
+      toast({
+        title: "Connection Issue",
+        description: "Using demo data as API connection failed. Start your local backend to see real data.",
+        variant: "destructive",
+      });
+    }
   });
 
   if (isLoading) {
     return (
       <div className="grid place-items-center py-10">
         <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-        <p>Failed to load jobs. Please try again later.</p>
       </div>
     );
   }

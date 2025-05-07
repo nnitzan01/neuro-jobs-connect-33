@@ -1,8 +1,10 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/home/Header";
 import { SearchBar } from "@/components/home/SearchBar";
 import JobList from "@/components/JobList";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -11,11 +13,34 @@ const Index = () => {
   const [location, setLocation] = useState("all");
   const [jobType, setJobType] = useState("all");
   const [setting, setSetting] = useState("all");
+  const [isLocalBackend, setIsLocalBackend] = useState(true);
+
+  // Check if the backend is running locally
+  useEffect(() => {
+    fetch("http://localhost:8000/api/jobs/", { method: "HEAD" })
+      .then(response => {
+        setIsLocalBackend(response.ok);
+      })
+      .catch(() => {
+        setIsLocalBackend(false);
+      });
+  }, []);
 
   return (
     <div className="min-h-screen flex font-sans w-full bg-gradient-to-br from-[#f8fbff] via-[#e5deff] to-[#f2fce2]">
       <main className="flex-1 px-6 py-10 max-w-6xl mx-auto">
         <Header />
+        
+        {!isLocalBackend && (
+          <Alert variant="destructive" className="mb-6 animate-fade-in">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Backend Connection Issue</AlertTitle>
+            <AlertDescription>
+              Your local backend server at http://localhost:8000 is not accessible. Showing demo data instead.
+              To see real data, please start your Django server using <code>python manage.py runserver</code>.
+            </AlertDescription>
+          </Alert>
+        )}
         
         <div id="featured-jobs" className="mb-8 scroll-mt-20">
           <h2 className="text-2xl font-bold mb-4">Featured Jobs</h2>
