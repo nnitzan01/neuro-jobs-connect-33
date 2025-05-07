@@ -80,10 +80,14 @@ const PostJob = () => {
   // Post job mutation
   const postJobMutation = useMutation({
     mutationFn: async (jobData: FormValues) => {
+      // Create basic auth credentials
+      const credentials = btoa("admin:admin"); // Base64 encode username:password
+      
       const response = await fetch("http://localhost:8000/api/jobs/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Basic ${credentials}` // Add Basic Auth
         },
         body: JSON.stringify({
           ...jobData,

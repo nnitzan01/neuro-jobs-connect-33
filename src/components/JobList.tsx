@@ -67,7 +67,15 @@ const fetchJobs = async (featured?: boolean): Promise<Job[]> => {
       ? `http://localhost:8000/api/jobs/?featured=${featured}` 
       : "http://localhost:8000/api/jobs/";
     
-    const response = await fetch(url);
+    // Create basic auth credentials
+    const credentials = btoa("admin:admin"); // Base64 encode username:password
+    
+    const response = await fetch(url, {
+      headers: {
+        "Authorization": `Basic ${credentials}` // Add Basic Auth
+      }
+    });
+    
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
@@ -102,18 +110,16 @@ interface JobListProps {
 export default function JobList({ featured = false }: JobListProps) {
   const { toast } = useToast();
   
-  // Using React Query for data fetching with proper onSettled instead of onError
+  // Using React Query for data fetching with proper error handling
   const { data: jobs, isLoading, error } = useQuery({
     queryKey: ["jobs", featured],
     queryFn: () => fetchJobs(featured),
-    onSettled: (data, error) => {
-      if (error) {
-        toast({
-          title: "Connection Issue",
-          description: "Using demo data as API connection failed. Start your local backend to see real data.",
-          variant: "destructive",
-        });
-      }
+    onError: (error) => {
+      toast({
+        title: "Connection Issue",
+        description: "Using demo data as API connection failed. Start your local backend to see real data.",
+        variant: "destructive",
+      });
     }
   });
 
