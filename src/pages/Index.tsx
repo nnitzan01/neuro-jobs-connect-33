@@ -1,8 +1,7 @@
-
 import { useState } from "react";
 import { Header } from "@/components/home/Header";
 import { SearchBar } from "@/components/home/SearchBar";
-import JobList, { REGULAR_JOBS } from "@/components/JobList";
+import JobList from "@/components/JobList";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -41,7 +40,7 @@ const Index = () => {
 
         <div id="all-jobs" className="mb-8 scroll-mt-20">
           <h2 className="text-2xl font-bold mb-4">All Jobs</h2>
-          <JobList featured={false} jobsToShow={REGULAR_JOBS} />
+          <JobList featured={false} />
         </div>
         
         <div id="our-mission" className="mb-8 mt-16 pt-4 scroll-mt-20 border-t border-gray-200">
