@@ -67,8 +67,10 @@ const fetchJobs = async (featured?: boolean): Promise<Job[]> => {
       ? `http://localhost:8000/api/jobs/?featured=${featured}` 
       : "http://localhost:8000/api/jobs/";
     
-    // Create basic auth credentials
-    const credentials = btoa("admin:admin"); // Base64 encode username:password
+    // Use your existing superuser credentials
+    const username = "your_username"; // Replace with your actual superuser username
+    const password = "your_password"; // Replace with your actual superuser password
+    const credentials = btoa(`${username}:${password}`); // Base64 encode username:password
     
     const response = await fetch(url, {
       headers: {
@@ -114,14 +116,12 @@ export default function JobList({ featured = false }: JobListProps) {
   const { data: jobs, isLoading, error } = useQuery({
     queryKey: ["jobs", featured],
     queryFn: () => fetchJobs(featured),
-    onSettled: (data, error) => {
-      if (error) {
-        toast({
-          title: "Connection Issue",
-          description: "Using demo data as API connection failed. Start your local backend to see real data.",
-          variant: "destructive",
-        });
-      }
+    onError: (error) => {
+      toast({
+        title: "Connection Issue",
+        description: "Using demo data as API connection failed. Start your local backend to see real data.",
+        variant: "destructive",
+      });
     }
   });
 

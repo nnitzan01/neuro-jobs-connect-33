@@ -1,4 +1,3 @@
-
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { useState } from "react";
@@ -80,9 +79,11 @@ const PostJob = () => {
   // Post job mutation
   const postJobMutation = useMutation({
     mutationFn: async (jobData: FormValues) => {
-      // Create basic auth credentials
-      const credentials = btoa("admin:admin"); // Base64 encode username:password
-      
+      // Use your existing superuser credentials
+      const username = "your_username"; // Replace with your actual superuser username
+      const password = "your_password"; // Replace with your actual superuser password
+      const credentials = btoa(`${username}:${password}`); // Base64 encode username:password
+    
       const response = await fetch("http://localhost:8000/api/jobs/", {
         method: "POST",
         headers: {
