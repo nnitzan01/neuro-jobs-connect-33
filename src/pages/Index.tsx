@@ -5,8 +5,11 @@ import { SearchBar } from "@/components/home/SearchBar";
 import JobList from "@/components/JobList";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
+  
   const [searchQuery, setSearchQuery] = useState("");
   const [jobFunction, setJobFunction] = useState("all");
   const [sector, setSector] = useState("all");
@@ -25,6 +28,21 @@ const Index = () => {
         setIsLocalBackend(false);
       });
   }, []);
+
+  // Handler for the search form submission
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    
+    if (searchQuery) params.append("query", searchQuery);
+    if (jobFunction !== "all") params.append("jobFunction", jobFunction);
+    if (sector !== "all") params.append("sector", sector);
+    if (location !== "all") params.append("location", location);
+    if (jobType !== "all") params.append("jobType", jobType);
+    if (setting !== "all") params.append("setting", setting);
+    
+    // Navigate to the search results page with the search parameters
+    navigate(`/search?${params.toString()}`);
+  };
 
   return (
     <div className="min-h-screen flex font-sans w-full bg-gradient-to-br from-[#f8fbff] via-[#e5deff] to-[#f2fce2]">
@@ -61,6 +79,7 @@ const Index = () => {
             setJobType={setJobType}
             setting={setting}
             setSetting={setSetting}
+            onSearch={handleSearch}
           />
         </div>
 

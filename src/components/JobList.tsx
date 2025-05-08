@@ -62,12 +62,18 @@ const fallbackJobs: Job[] = [
   }
 ];
 
-// API service
-const fetchJobs = async (featured?: boolean): Promise<Job[]> => {
+// API service with search parameters support
+const fetchJobs = async (params: Record<string, string | boolean | undefined>): Promise<Job[]> => {
   try {
-    const url = featured !== undefined 
-      ? `http://localhost:8000/api/jobs/?featured=${featured}` 
-      : "http://localhost:8000/api/jobs/";
+    // Build query parameters from the params object
+    const queryParams = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== "all") {
+        queryParams.append(key, String(value));
+      }
+    });
+    
+    const url = `http://localhost:8000/api/jobs/?${queryParams.toString()}`;
     
     // Use your existing superuser credentials
     const username = "nnitzan"; // Replace with your actual superuser username
@@ -102,22 +108,68 @@ const fetchJobs = async (featured?: boolean): Promise<Job[]> => {
     return [];
   } catch (error) {
     console.error("Error fetching jobs:", error);
-    // Return fallback data when API is unavailable
-    return fallbackJobs.filter(job => featured === undefined || job.featured === featured);
+    
+    // Return filtered fallback data based on parameters
+    let filteredJobs = [...fallbackJobs];
+    
+    if (params.featured !== undefined) {
+      filteredJobs = filteredJobs.filter(job => job.featured === params.featured);
+    }
+    if (params.search) {
+      const searchString = String(params.search).toLowerCase();
+      filteredJobs = filteredJobs.filter(job => 
+        job.title.toLowerCase().includes(searchString) || 
+        job.company.toLowerCase().includes(searchString) || 
+        (job.description && job.description.toLowerCase().includes(searchString))
+      );
+    }
+    if (params.job_function && params.job_function !== "all") {
+      const jobFunction = String(params.job_function).replace(/-/g, ' ').toLowerCase();
+      filteredJobs = filteredJobs.filter(job => 
+        job.title.toLowerCase().includes(jobFunction)
+      );
+    }
+    if (params.sector && params.sector !== "all") {
+      const sector = String(params.sector).replace(/-/g, ' ').toLowerCase();
+      filteredJobs = filteredJobs.filter(job => 
+        job.sector?.toLowerCase().includes(sector)
+      );
+    }
+    if (params.location && params.location !== "all") {
+      filteredJobs = filteredJobs.filter(job => 
+        job.location.includes(String(params.location))
+      );
+    }
+    if (params.type && params.type !== "all") {
+      filteredJobs = filteredJobs.filter(job => 
+        job.type.toLowerCase().includes(String(params.type).toLowerCase())
+      );
+    }
+    if (params.setting && params.setting !== "all") {
+      filteredJobs = filteredJobs.filter(job => 
+        job.setting?.toLowerCase().includes(String(params.setting).toLowerCase())
+      );
+    }
+    
+    return filteredJobs;
   }
 };
 
 interface JobListProps {
   featured?: boolean;
+  searchParams?: Record<string, string | boolean | undefined>;
 }
 
-export default function JobList({ featured = false }: JobListProps) {
+export default function JobList({ featured = false, searchParams = {} }: JobListProps) {
   const { toast } = useToast();
+  
+  // Combine featured flag with other search parameters
+  const queryParams = { featured, ...searchParams };
   
   // Using React Query for data fetching with proper error handling
   const { data: jobs, isLoading, error } = useQuery({
-    queryKey: ["jobs", featured],
-    queryFn: () => fetchJobs(featured),
+    queryKey: ["jobs", queryParams],
+    queryFn: () => fetchJobs(queryParams),
   });
 
   // Handle errors with useEffect
