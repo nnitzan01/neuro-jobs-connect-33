@@ -17,6 +17,8 @@ export type Job = {
   sector?: string;
   setting?: string;
   description?: string;
+  requirements?: string;
+  salary?: string;
   created_at: string;
 };
 
