@@ -9,6 +9,7 @@ import PostJob from "./pages/PostJob";
 import NotFound from "./pages/NotFound";
 import SubmitProfile from "./pages/SubmitProfile";
 import SearchResults from "./pages/SearchResults";
+import JobDetails from "./pages/JobDetails";
 import { AppSidebar } from "./components/app-sidebar";
 
 const queryClient = new QueryClient({
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="/search" element={<SearchResults />} />
             <Route path="/featured" element={<Index />} />
             <Route path="/submit-profile" element={<SubmitProfile />} />
+            <Route path="/jobs/:id" element={<JobDetails />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
