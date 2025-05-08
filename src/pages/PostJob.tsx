@@ -80,8 +80,8 @@ const PostJob = () => {
   const postJobMutation = useMutation({
     mutationFn: async (jobData: FormValues) => {
       // Use your existing superuser credentials
-      const username = "your_username"; // Replace with your actual superuser username
-      const password = "your_password"; // Replace with your actual superuser password
+      const username = "nnitzan"; // Replace with your actual superuser username
+      const password = "admin2025"; // Replace with your actual superuser password
       const credentials = btoa(`${username}:${password}`); // Base64 encode username:password
     
       const response = await fetch("http://localhost:8000/api/jobs/", {
