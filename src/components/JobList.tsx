@@ -112,16 +112,18 @@ interface JobListProps {
 export default function JobList({ featured = false }: JobListProps) {
   const { toast } = useToast();
   
-  // Using React Query for data fetching with proper error handling
+  // Using React Query for data fetching with proper error handling using onSettled
   const { data: jobs, isLoading, error } = useQuery({
     queryKey: ["jobs", featured],
     queryFn: () => fetchJobs(featured),
-    onError: (error) => {
-      toast({
-        title: "Connection Issue",
-        description: "Using demo data as API connection failed. Start your local backend to see real data.",
-        variant: "destructive",
-      });
+    onSettled: (data, error) => {
+      if (error) {
+        toast({
+          title: "Connection Issue",
+          description: "Using demo data as API connection failed. Start your local backend to see real data.",
+          variant: "destructive",
+        });
+      }
     }
   });
 
