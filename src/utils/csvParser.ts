@@ -1,5 +1,4 @@
-
-import { type Job } from "@/components/JobList";
+import { Job } from "@/types/job";
 
 export const parseCSV = (csvText: string): Job[] => {
   const lines = csvText.trim().split('\n');

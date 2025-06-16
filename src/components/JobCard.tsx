@@ -1,7 +1,7 @@
 
 import { Briefcase, MapPin, Building, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { type Job } from "./JobList";
+import { Job } from "@/types/job";
 import { Link } from "react-router-dom";
 
 interface JobCardProps {
