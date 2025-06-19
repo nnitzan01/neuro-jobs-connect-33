@@ -7,9 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect } from "react";
-import { type Job } from "@/components/JobList";
+import { Job } from "@/types/job";
+import { fetchJobsFromCSV } from "@/utils/csvParser";
 
-// Fetch a single job by ID
+// Fetch a single job by ID with CSV fallback
 const fetchJobById = async (id: string): Promise<Job> => {
   try {
     const url = `http://localhost:8000/api/jobs/${id}/`;
@@ -25,14 +26,29 @@ const fetchJobById = async (id: string): Promise<Job> => {
     });
     
     if (!response.ok) {
-      throw new Error("Failed to fetch job details");
+      throw new Error("Failed to fetch job details from API");
     }
     
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching job details:", error);
-    throw error;
+    console.error("Error fetching job details from API:", error);
+    
+    // Fallback to CSV data
+    try {
+      console.log("Falling back to CSV data for job details");
+      const csvJobs = await fetchJobsFromCSV();
+      const job = csvJobs.find(job => job.id === parseInt(id));
+      
+      if (!job) {
+        throw new Error(`Job with ID ${id} not found in CSV data`);
+      }
+      
+      return job;
+    } catch (csvError) {
+      console.error("Error fetching job details from CSV:", csvError);
+      throw new Error("Job not found in both API and CSV data");
+    }
   }
 };
 
