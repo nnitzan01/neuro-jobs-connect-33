@@ -1,54 +1,51 @@
-# Welcome to your Lovable project
+# Welcome to neurotech job board
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/3aa695ae-3aa1-49f5-b204-b721a558180a
 
-## How can I edit this code?
+## How to use this project?
 
-There are several ways of editing your application.
+There are several ways of adding new jobs to the job list:
 
-**Use Lovable**
+**Using Django backend**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3aa695ae-3aa1-49f5-b204-b721a558180a) and start prompting.
+```sh
+# Step 1: Activate the virtual environment.
+conda activate neurotech-backend
 
-Changes made via Lovable will be committed automatically to this repo.
+# Step 2: Run the development server:
+python manage.py runserver
+```
 
-**Use your preferred IDE**
+**Locally updating the CSV sheet**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Once you clone the repository, you can add and remove jobs from jobs-data.csv located at neuro-jobs-connect-33/public/
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+git clone https://github.com/nnitzan01/neuro-jobs-connect-33.git
 
 # Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+cd neuro-jobs-connect-33
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Step 3: Update the table locally
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# Step 4: Add the table to be comitted
+git add public/jobs-data.csv
+
+# Step 5: Commit the changes
+git commit -m "changes made"
+
+# Step 6: Push the changes to the remote repository
+git push origin main
 ```
 
 **Edit a file directly in GitHub**
 
-- Navigate to the desired file(s).
+- Navigate to neuro-jobs-connect-33/public/jobs-data.csv
 - Click the "Edit" button (pencil icon) at the top right of the file view.
 - Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
 
 ## What technologies are used for this project?
 
@@ -59,15 +56,3 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/3aa695ae-3aa1-49f5-b204-b721a558180a) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
